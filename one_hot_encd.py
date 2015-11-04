@@ -17,8 +17,7 @@ def one_hot_dataframe(data, cols, replace=False):
         and the fitted vectorizor.
     """
     vec = DictVectorizer()
-    mkdict = lambda row: dict((col, row[col]) for col in cols)
-    vecData = pandas.DataFrame(vec.fit_transform(data[cols].apply(mkdict, axis=1)).toarray())
+    vecData = pandas.DataFrame(vec.fit_transform(data[cols].to_dict(orient='records')).toarray())
     vecData.columns = vec.get_feature_names()
     vecData.index = data.index
     if replace is True:
